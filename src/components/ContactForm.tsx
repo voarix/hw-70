@@ -18,6 +18,7 @@ const initialForm: ContactMutation = {
 
 const ContactForm: React.FC<Props> = ({onSubmitAdd, idContact, isEdit = false, myContact}) => {
   const [form, setForm] = useState<ContactMutation>(initialForm);
+  const [imagePhotoUrl, setImagePhotoUrl] = useState("");
 
   useEffect(() => {
     if (isEdit && idContact && myContact) {
@@ -28,6 +29,10 @@ const ContactForm: React.FC<Props> = ({onSubmitAdd, idContact, isEdit = false, m
   const inputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {value, name} = e.target;
     setForm(prevState => ({...prevState, [name]: value}));
+
+    if(name === 'photo'){
+      setImagePhotoUrl(value);
+    }
   };
 
   const onSubmit = (e: React.FormEvent) => {
@@ -89,6 +94,17 @@ const ContactForm: React.FC<Props> = ({onSubmitAdd, idContact, isEdit = false, m
             onChange={inputChangeHandler}
           />
         </div>
+
+        {imagePhotoUrl && (
+          <div className="mb-3 mt-3">
+            <img
+              src={imagePhotoUrl}
+              alt={form.photo}
+              className="img-fluid rounded "
+              style={{ maxWidth: "200px", maxHeight: "200px" }}
+            />
+          </div>
+        )}
 
         <button type="submit" className="btn btn-primary mt-4">
           <span className="me-2">{isEdit ? "Edit" : "Add"}</span>

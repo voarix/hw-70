@@ -1,6 +1,8 @@
 import { Contact } from "../../types";
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useAppDispatch } from "../../app/hooks.ts";
+import { deleteContact } from "../../store/contactsSlice.ts";
 
 interface ModalProps {
   contact: Contact;
@@ -9,6 +11,11 @@ interface ModalProps {
 
 const Modal: React.FC<ModalProps> = ({contact, onClose}) => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
+  const onDeleteContact = (id: string) => {
+    dispatch(deleteContact(id));
+  };
 
   return (
     <>
@@ -35,15 +42,15 @@ const Modal: React.FC<ModalProps> = ({contact, onClose}) => {
                 />
               </div>
               <div className="d-flex flex-column align-items-center">
-                <h5>{contact.phone}</h5>
-                <h5>{contact.email}</h5>
+                <h5>Phone number: <strong>{contact.phone}</strong></h5>
+                <h5>Email: <strong>{contact.email}</strong></h5>
               </div>
             </div>
             <div className="modal-footer d-flex justify-content-between">
               <button className="btn btn-secondary" onClick={() => navigate(`/edit/${contact.id}`)}>
                 Edit
               </button>
-              <button className="btn btn-danger">
+              <button className="btn btn-danger" onClick={() => onDeleteContact(contact.id)}>
                 Delete
               </button>
             </div>
