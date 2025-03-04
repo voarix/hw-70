@@ -15,9 +15,9 @@ const ContactItem: React.FC<ContactItemProps> = ({contact}) => {
 
   return (
     <>
-      <div className="card mb-4 shadow-sm" onClick={() => setModal(true)}>
-        <div className="card-body d-flex justify-content-between">
-          <img src={contact.photo} alt={contact.name} style={{maxWidth: "200px"}} className="rounded"/>
+      <div className="card mb-4 shadow-sm" style={{cursor: 'pointer'}} onClick={() => setModal(true)}>
+        <div className="card-body d-flex justify-content-between align-items-center">
+          <img src={contact.photo} alt={contact.name} style={{maxWidth: "200px", maxHeight: '200px'}} className="rounded"/>
           <h2 className="card-title mt-2">{contact.name}</h2>
         </div>
       </div>

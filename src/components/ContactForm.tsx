@@ -23,6 +23,7 @@ const ContactForm: React.FC<Props> = ({onSubmitAdd, idContact, isEdit = false, m
   useEffect(() => {
     if (isEdit && idContact && myContact) {
       setForm(myContact);
+      setImagePhotoUrl(myContact.photo);
     }
   }, [idContact, myContact, isEdit]);
 
@@ -49,9 +50,10 @@ const ContactForm: React.FC<Props> = ({onSubmitAdd, idContact, isEdit = false, m
       <form onSubmit={onSubmit}>
         <h4>{isEdit ? "Edit" : "Add new"} contact</h4>
         <hr/>
-        <div className="form-group">
+        <div className="form-group mb-2">
           <label htmlFor="name">Name</label>
           <input
+            required
             type="text"
             id="name"
             name="name"
@@ -61,9 +63,10 @@ const ContactForm: React.FC<Props> = ({onSubmitAdd, idContact, isEdit = false, m
           />
         </div>
 
-        <div className="form-group">
+        <div className="form-group mb-2">
           <label htmlFor="phone">Phone</label>
           <input
+            required
             id="phone"
             name="phone"
             className="form-control"
@@ -71,9 +74,10 @@ const ContactForm: React.FC<Props> = ({onSubmitAdd, idContact, isEdit = false, m
             onChange={inputChangeHandler}/>
         </div>
 
-        <div className="form-group">
+        <div className="form-group mb-2">
           <label htmlFor="email">Email</label>
           <input
+            required
             type="text"
             id="email"
             name="email"
@@ -86,6 +90,7 @@ const ContactForm: React.FC<Props> = ({onSubmitAdd, idContact, isEdit = false, m
         <div className="form-group">
           <label htmlFor="photo">Photo</label>
           <input
+            required
             type="text"
             id="photo"
             name="photo"
@@ -99,9 +104,9 @@ const ContactForm: React.FC<Props> = ({onSubmitAdd, idContact, isEdit = false, m
           <div className="mb-3 mt-3">
             <img
               src={imagePhotoUrl}
-              alt={form.photo}
+              alt={`This place for photo of ${form.name}`}
               className="img-fluid rounded "
-              style={{ maxWidth: "200px", maxHeight: "200px" }}
+              style={{ maxWidth: "300px", maxHeight: "300px" }}
             />
           </div>
         )}
