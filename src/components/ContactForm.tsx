@@ -1,9 +1,10 @@
 import * as React from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Contact, ContactMutation } from "../types";
 
 interface Props {
   onSubmitAdd: (newContact: Contact) => void;
+  myContact?: Contact;
   idContact?: string;
   isEdit?: boolean;
 }
@@ -15,8 +16,14 @@ const initialForm: ContactMutation = {
   photo: ""
 };
 
-const DishForm: React.FC<Props> = ({onSubmitAdd, idContact, isEdit = false}) => {
+const ContactForm: React.FC<Props> = ({onSubmitAdd, idContact, isEdit = false, myContact}) => {
   const [form, setForm] = useState<ContactMutation>(initialForm);
+
+  useEffect(() => {
+    if (isEdit && idContact && myContact) {
+      setForm(myContact);
+    }
+  }, [idContact, myContact, isEdit]);
 
   const inputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {value, name} = e.target;
@@ -25,7 +32,11 @@ const DishForm: React.FC<Props> = ({onSubmitAdd, idContact, isEdit = false}) => 
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSubmitAdd({...form, id: Math.random().toString()});
+    if (form.name.trim() && form.phone.trim() && form.email.trim() && form.photo.trim()) {
+      onSubmitAdd({...form, id: idContact || Math.random().toString()});
+    } else {
+      alert("Заполните все поля");
+    }
   };
 
   return (
@@ -88,4 +99,4 @@ const DishForm: React.FC<Props> = ({onSubmitAdd, idContact, isEdit = false}) => 
   );
 };
 
-export default DishForm;
+export default ContactForm;

@@ -19,8 +19,14 @@ const contactsSlice = createSlice({
     addContact(state, action: PayloadAction<Contact>) {
       state.contacts.push(action.payload);
     },
+    editContact(state, action: PayloadAction<Contact>) {
+      const index = state.contacts.findIndex(contact => contact.id === action.payload.id);
+      if (index > -1) {
+        state.contacts[index] = action.payload;
+      }
+    }
   }
 });
 
 export const contactsReducer = contactsSlice.reducer;
-export const {addContact} = contactsSlice.actions;
+export const {addContact, editContact} = contactsSlice.actions;
